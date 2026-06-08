@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debjeet's Commerce Dashboard</title>
+<style>
+body{font-family:Arial,sans-serif;background:#111827;color:#fff;margin:0;padding:20px}
+h1,h2{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:#1f2937;padding:16px;border-radius:14px}
+input[type=checkbox]{transform:scale(1.1)}
+textarea{width:100%;height:120px}
+.progress{height:24px;background:#374151;border-radius:12px;overflow:hidden}
+.bar{height:100%;width:0%;background:#10b981}
+table{width:100%;border-collapse:collapse}
+td,th{border:1px solid #374151;padding:6px;text-align:center}
+</style>
+</head>
+<body>
+<h1>📚 Debjeet's Class 11 Commerce Dashboard</h1>
+
+<div class="grid">
+<div class="card">
+<h2>Today's Tasks</h2>
+<label><input class="task" type="checkbox"> Accountancy</label><br>
+<label><input class="task" type="checkbox"> Economics</label><br>
+<label><input class="task" type="checkbox"> Statistics</label><br>
+<label><input class="task" type="checkbox"> Maths</label><br>
+<label><input class="task" type="checkbox"> English</label><br>
+<label><input class="task" type="checkbox"> Business Studies</label><br>
+<label><input class="task" type="checkbox"> Reading</label><br>
+<label><input class="task" type="checkbox"> Exercise</label><br>
+<label><input class="task" type="checkbox"> No Instagram During Study</label><br>
+<label><input class="task" type="checkbox"> Sleep Before 11 PM</label><br>
+</div>
+
+<div class="card">
+<h2>Productivity Score</h2>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<h3 id="score">0%</h3>
+</div>
+
+<div class="card">
+<h2>Daily Routine</h2>
+<ul>
+<li>8:30 AM Wake Up</li>
+<li>9:30–11:00 Accounts/Maths</li>
+<li>11:15–12:45 Economics/Statistics</li>
+<li>2:00–3:30 Business Studies/English</li>
+<li>4:00–5:00 Revision</li>
+<li>6:00–7:30 Weak Subject</li>
+<li>8:15–9:00 Reading</li>
+<li>9:00–10:15 Revision</li>
+<li>11:00 PM Sleep</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Overthinking Journal</h2>
+<textarea placeholder="Write worries, then write one action step."></textarea>
+</div>
+</div>
+
+<div class="card">
+<h2>Weekly Tracker</h2>
+<table>
+<tr><th>Habit</th><th>M</th><th>T</th><th>W</th><th>Th</th><th>F</th><th>S</th><th>Su</th></tr>
+<tr><td>5+ Hours Study</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Reading</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>No Insta</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+</div>
+
+<script>
+const tasks=document.querySelectorAll('.task');
+const bar=document.getElementById('bar');
+const score=document.getElementById('score');
+
+function update(){
+ let done=0;
+ tasks.forEach(t=>{if(t.checked)done++;});
+ let pct=Math.round(done/tasks.length*100);
+ bar.style.width=pct+'%';
+ score.textContent=pct+'%';
+ localStorage.setItem('commerceDash',
+ JSON.stringify([...tasks].map(t=>t.checked)));
+}
+
+tasks.forEach(t=>t.addEventListener('change',update));
+
+const saved=JSON.parse(localStorage.getItem('commerceDash')||'null');
+if(saved){
+ tasks.forEach((t,i)=>t.checked=saved[i]);
+ update();
+}
+</script>
+</body>
+</html>
